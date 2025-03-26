@@ -257,7 +257,7 @@ pagination:
 collections:
   tutorials:
     output: true
-    permalink: /tutorials/
+    permalink: :collection/:path/
 
 # Plugins (previously gems:)
 plugins:
