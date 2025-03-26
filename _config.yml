@@ -254,6 +254,10 @@ pagination:
     before: 2
     after: 2
 
+collections:
+  tutorials:
+    output: true
+    permalink: /tutorials/
 
 # Plugins (previously gems:)
 plugins:
