@@ -115,7 +115,7 @@ analytics:
 author:
   name             : "Tyr Wiesner-Hanks"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Plant scientist, image analysis enthusiast, etc etc."
+  bio              : "Plant scientist, computer vision enthusiast, etc etc."
   location         : "Ithaca, NY"
   links:
     - label: "Email"
