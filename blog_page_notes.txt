@@ -1,0 +1,207 @@
+### Notes for personal blog
+
+
+Page ideas --
+- Intro to computer vision
+- Intro to machine learning
+
+
+
+## Intro to machine learning for computer vision. 
+
+
+ML models can. The three most common ones are:
+- Classify an image.
+- Detect objects of one or more types.
+- Segment objects or surface types.
+-- Semantic segmentation
+-- Instance segmentation
+
+The format of the model output will match the format of the input. If you train a model by showing it .
+
+
+
+## A practical guide to counting things in images
+
+Detecting and counting objects of a certain type within an image used to require an advanced understanding of computer vision. Nowadays it's essentially a solved problem.
+
+This is an informal, practical guide to training an ML model to detect and count objects.
+
+If you .
+
+Understanding the basic concepts behind model training and evaluation is still extremely important. You need to know how to tell the quality of your model and compare it to the performance of humans.
+
+## Annotation
+
+ML models are trained on some kind of input data. For computer vision tasks, this data is generally created, or at least curated, by humans. This process of labeling is called **annotation**.
+
+The format of the annotations will generally match the format of the output data:
+
+- For classification models, entire images are labeled to denote whether they contain the target feature(s).
+- For detection models, bounding boxes are drawn around each target feature in the image.
+- For segmentation models, polygons are drawn around each target feature in the image.
+
+When we say "target feature" here, that could mean a discrete object like a basketball or a horse, or it could be a feature of a larger object, like an eye or a nose. For classification models, it could be a more of a general property that does not really have a discrete location in the image, like "Does this rash look like it is caused by measles?" A model could have just one type of target object, or it could have hundreds.
+
+In the past, training a deep learning model required a vast amount of human-generated annotations, which takes a long time to do. Today, you may be able to generate all the annotation data needed to train a highly accurate model in an hour or two. This is because of two factors:
+
+1. Modern base models require far less data to retrain for your specific task than older ones
+2. Semi-automated annotation methods can help you annotate images 10-100x faster
+
+
+## Positive and Negative, True and False
+
+For the purpose of evaluating an ML model, the human annotations form the **ground truth** against which the model is compared. A model prediction is considered correct only when it matches the human annotation. 
+
+If a model is performing perfectly, then when you apply it to an image to produce some sort of output (classifications, bounding boxes, polygons), that output will match the human ground truth in all cases.
+
+The way in which you decide whether a prediction matches a human annotation depends on the type of task the model is doing.
+
+For classification models, both the input and output are binary variables. Does the image contain a dog, or not? Does the image contain symptoms of X disease, or not? For a given image, you simply compare the feature(s) that were marked as being present in the image by the model to those marked as present by humans.
+
+For detection models, the input and output are bounding boxes with a discrete position, size, and shape. This makes it slightly more complicated to decide if a box drawn by the model matches one drawn by a human, since the boxes will almost never overlap perfectly. 
+
+For segmentation models, the input and output
+
+There are two ways that a model's prediction can be incorrect: it can identify a target object where none exists, and it can fail to identify a target object that is truly there.
+
+A True Positive is an instance where the model has detected something which was present in the ground truth annotations.
+
+A False Positive is an instance where the model has detected something that was not present in the ground truth annotations.
+
+A False Negative is an instance where the model has missed something that was present in the ground truth annotations.
+
+A True Negative is an instance where the model has missed 
+
+
+For some tasks, the number of True Negatives may be impossible to calculate or simply not helpful. In a detection task, for example, 
+
+
+
+
+## Precision, Recall, and F1 scores
+
+Three metrics are commonly used to quantify performance of deep learning models for computer vision tasks: Precision (P), Recall (R), and F1.
+
+All three metrics range from 0 to 1, with a higher score indicating a better model. You may also see them written as percentages, i.e. rescaled from 0 to 100.
+
+**Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
+
+P = \frac{TP}{TP + FP}
+
+A model with a high P value produces a low number of false positives, while a model with low P has a high number of false positives. That is, it detecting many things that aren't really there.
+
+**Recall** is a measure of the prevalence of false positives (FP). It is the proportion of the objects identified in the ground truth data that were successfully detected by the model.
+
+R = \frac{TP}{TP + FN}
+
+In other words, recall is the proportion of the target objects that are detected by the model. A model with low R is missing many target objects. A model with P = 1 has zero false negatives (FN).
+
+It is important to report both P and R, because there is often a tradeoff between the two, and a model that excels in one metric may be terrible in the other.
+
+For example, say that you have trained two models to detect aphids in an image. You apply them to an image in which 50 aphids were found and annotated in the ground truth data.
+
+Model A detects 5 aphids, all 5 of which were present in the ground truth. It has made no false positives, so its precision is perfect. It has missed the other 45 aphids, however, meaning it has many false negatives and thus a terrible recall:
+
+P_A = 5 / (5 + 0) = 1.0
+R_A = 5 / (5 + 45) = 0.05
+
+Model B detects 500 aphids, including all 50 of the aphids that were noted in the ground truth. It has no false negatives (i.e. it has not missed anything) but a huge number of false positives. Thus the recall is perfect but the precision is terrible:
+
+P_B = 50 / (50 + 450) = 0.10
+R_B = 50 / (50 + 0) = 1.0
+
+Each of these models would look good if you only looked at precision or recall, but when we look at both terms we can see that both models are performing poorly. A good model will have both high precision and high recall.
+
+How can you ? The **F1 score** is a measure that incorporates both the number of false positives and the number of false negatives:
+
+F1 = \frac{2 \cdot TP}{(2 \cdot TP + FP + FN)}
+
+More precisely, the F1 is the *harmonic mean* of P and R. The harmonic mean of a set of numbers is the reciprocal of the mean of the reciprocals of that set. That is, for numbers a, b, and c, the harmonic mean is calculated like so:
+
+HM = \left( \frac{a^{-1} + b^{-1} + c^{-1}}{3} \right) ^{-1}
+
+This is often used to find a meaningful "average" of fractions when the arithmetic mean would be misleading. For example, if you take a round trip of 40 miles each way (80 miles in total), going 20 mph one way and 40 mph on the way back, the trip will take 3 hours. This is equivalent to driving the full distance at an average speed of 26.6 mph, which the harmonic mean of 20 and 40 mph.
+
+If you write out the harmonic mean of P and R and simplify the terms, you can see that it reduces to the equation for F1 given above:
+
+F1 = ((1/P + 1/R)/2) ^ -1
+
+= ((TP + FP)/TP) + ((TP + FN)/TP)) / 2
+= (2TP + FP + FN / 2TP) ^ -1
+= 2TP / (2TP + FP + FN)
+
+This reduced form of the equation (2TP / (2TP + FP + FN)) is the one you will see more often. The harmonic mean form (((1/P + 1/R)/2) ^ -1))) is not used as often.
+
+Notice that none of these equations include a term for the number of true negatives (TN). As mentioned in the section above, TN is often not very useful or informative.
+
+
+## Confidence thresholds
+
+When a deep learning model makes predictions on an image, each prediction usually has an associated *confidence score*. This score ranges from 0 to 1, with a higher value indicating that the model is more confident that the prediction in question is correct. 
+
+In a well-trained model, this confidence score is closely tied to a predictions's : predictions with `confidence = 0.05` are almost exclusively false positives, while predictions with `confidence = 0.95` are almost exclusively true positives. In a poorly performing model, the confidence score will be less accurate.
+
+When you apply a model to new data, you will often set a *confidence threshold* for reporting. Only those predictions with a confidence score equal to or greater than this threshold value will be included in the results.
+
+This filtering can also be done retroactively. If you want to examine the effect of different confidence , you can included in the initial model output and filtered out later on in your workflow.
+
+**P, R, and F1 scores for a model are 100% contingent on the confidence threshold used to filter predictions.** 
+
+A deep learning model which produces confidence *does not have* a generic or universal value of precision, recall, or F1. It only has values 
+
+Whenever you report a model's P, R, or F1, you should include the confidence threshold used.
+
+It is very important to check the documentation for whatever tools you are using to see what .
+
+
+## How does the confidence threshold affect P and R?
+
+As you increase the confidence threshold, a model's precision tends to go up and its recall tends to go down.
+
+At a very low threshold, you accept a large number of predictions. This includes many low-confidence predictions, which are more likely to be false positives, so the precision will be very low. This, meaning that there are fewer false negatives, so the recall will be very high.
+
+At a very high threshold, you accept only a small number of high-confidence predictions. This is unlikely to include many false positives, so the precision will be high, but you are likely filtering out many correct results, causing a .
+
+One type of plot you will often see is a line plot showing P/R at difference confidence thresholds. This is called a *precision-confidence curve* or *recall-confidence curve*.
+
+Below are several plots of this type. 
+
+Examining these plots is a good way to roughly evaluate a model's quality. If the model is functioning well, then you want a large range of confidence thresholds to work well.
+
+In the precision-confidence curve, the .
+
+## How does the confidence threshold affect F1?
+
+As the confidence threshold increases from 0 to 1, the precision increases and the recall decreases. In practice, this means that the F1 score will tend to plateau.
+
+Again, you can use the F1-confidence plot as a good visual gauge for model quality.
+
+This will give you some idea of how robust your model is when it comes to choosing a confidence threshold. If the model has a consistently high F1 across a wide range of values, then the exact value of confidence threshold . If the F1 value peaks at a very specific threshold and falls off dramatically outside of that, the model 
+
+## How do you tell if a model is performing well or not?
+
+Many people want to know if their model is good or not. What is a good F1 score? 
+
+Below is a set of quick ways
+
+
+Are you looking at test set performance?
+
+Does the F1-confidence curve look?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
