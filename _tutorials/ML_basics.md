@@ -68,11 +68,15 @@ All three metrics range from 0 to 1, with a higher score indicating a better mod
 
 **Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
 
+snarble - the equation below is written in single line with two dolla bills
+
 $$P = \frac{TP}{TP + FP}$$
 
 A model with a high P value produces a low number of false positives, while a model with low P has a high number of false positives. That is, it detecting many things that aren't really there.
 
 **Recall** is a measure of the prevalence of false positives (FP). It is the proportion of the objects identified in the ground truth data that were successfully detected by the model.
+
+snarble - the equation below is written in three lines, with the math bit separated
 
 $$
 R = \frac{TP}{TP + FN}
