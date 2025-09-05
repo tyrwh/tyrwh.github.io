@@ -1,6 +1,6 @@
 ---
-title: "ML: A primer for plant scientists"
-excerpt: "A non-technical primer on using machine learning ."
+title: "Deep Learning: The underlying concepts"
+excerpt: "A non-technical primer on the basic concepts and terminology used  in deep learning models for computer vision."
 ---
 
 # Overall structure
@@ -11,6 +11,22 @@ There is no single project outline that every ML project follows, but the genera
 2. Annotate the features of interest
 3. Train the model
 4. Evaluate the model
+
+### Types of tasks
+
+The above was written with three pound signs
+
+Types of tasks can go here:
+
+- Classification
+- Detection
+- Segmentation
+
+Here's a second view of the list using asterisks to see what that does:
+
+* Classification
+* Detection
+* Segmentation
 
 # Annotation
 
@@ -31,7 +47,9 @@ In the past, training a deep learning model required a vast amount of human-gene
 1. Modern base models require far less data to retrain for your specific task than older ones
 2. Semi-automated annotation methods can help you annotate images 10-100x faster
 
-## Positive and Negative, True and False
+#### Positive and Negative, True and False
+
+The above was written with four pound signs
 
 For the purpose of evaluating an ML model, the human annotations form the **ground truth** against which the model is compared. A model prediction is considered correct only when it matches the human annotation. 
 
@@ -68,9 +86,9 @@ All three metrics range from 0 to 1, with a higher score indicating a better mod
 
 **Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
 
-snarble - the equation below is written in single line with two dolla bills
-
-$$P = \frac{TP}{TP + FP}$$
+$$
+P = \frac{TP}{TP + FP}
+$$
 
 A model with a high P value produces a low number of false positives, while a model with low P has a high number of false positives. That is, it detecting many things that aren't really there.
 

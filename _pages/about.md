@@ -16,9 +16,7 @@ last_modified_at: 2022-05-27T11:59:26-04:00
 toc: true
 ---
 
-
-
-A bunch of junk goes in here about me
+A bunch of stuff should go in here about my CV I guess.
 
 ---
 
