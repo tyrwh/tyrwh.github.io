@@ -68,9 +68,7 @@ All three metrics range from 0 to 1, with a higher score indicating a better mod
 
 **Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
 
-$$
-P = \frac{TP}{TP + FP}
-$$
+$$P = \frac{TP}{TP + FP}$$
 
 A model with a high P value produces a low number of false positives, while a model with low P has a high number of false positives. That is, it detecting many things that aren't really there.
 
@@ -104,15 +102,11 @@ Each of these models would look good if you only looked at precision or recall, 
 
 How can you ? The **F1 score** is a measure that incorporates both the number of false positives and the number of false negatives:
 
-$$
-F1 = \frac{2 \cdot TP}{(2 \cdot TP + FP + FN)}
-$$
+$$F1 = \frac{2 \cdot TP}{(2 \cdot TP + FP + FN)}$$
 
 More precisely, the F1 is the *harmonic mean* of P and R. The harmonic mean of a set of numbers is the reciprocal of the mean of the reciprocals of that set. That is, for numbers a, b, and c, the harmonic mean is calculated like so:
 
-$$
-HM = \left( \frac{a^{-1} + b^{-1} + c^{-1}}{3} \right) ^{-1}
-$$
+$$HM = \left( \frac{a^{-1} + b^{-1} + c^{-1}}{3} \right) ^{-1}$$
 
 This is often used to find a meaningful "average" of fractions when the arithmetic mean would be misleading. For example, if you take a round trip of 40 miles each way (80 miles in total), going 20 mph one way and 40 mph on the way back, the trip will take 3 hours. This is equivalent to driving the full distance at an average speed of 26.6 mph, which the harmonic mean of 20 and 40 mph.
 
