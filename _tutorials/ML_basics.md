@@ -3,11 +3,9 @@ title: "ML: A primer for plant scientists"
 excerpt: "A non-technical primer on using machine learning ."
 ---
 
-So, you want to 
-
 # Overall structure
 
-There is no single, but broadly speaking 
+There is no single project outline that every ML project follows, but the general procedure looks like this:
 
 1. Capture images
 2. Annotate the features of interest
@@ -26,7 +24,7 @@ The format of the annotations will generally match the format of the output data
 
 When we say "target feature" here, that could mean a discrete object like a basketball or a horse, or it could be a feature of a larger object, like an eye or a nose. For classification models, it could be a more of a general property that does not really have a discrete location in the image, like "Does this rash look like it is caused by measles?" 
 
-A model could have just one type of target object, or it could have hundreds. The 
+A model could have just one type of target object, or it could have hundreds. 
 
 In the past, training a deep learning model required a vast amount of human-generated annotations, which naturally takes a long time to do. Today, you may be able to generate all the annotation data needed to train a highly accurate model in an hour or two. This is because of two factors:
 
