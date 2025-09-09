@@ -2,15 +2,19 @@
 title: "You should learn scikit-image before learning OpenCV"
 ---
 
-If you are a plant scientist looking to build skills in computer vision/image analysis, you will naturally wonder where to start. 
+If you are a plant scientist looking to build skills in computer vision/image analysis, you will naturally wonder where to start. There are three places to start.
+
+PlantCV is a library built 
 
 I feel that  library `scikit-image` first.
+
+If you're new to image analysis, these are  good reasons to learn `skimage` from the beginning. If you're used to using `cv2`, there are several reasons to consider picking up `skimage` as your default choice when starting a new imaging project.
 
 The [opencv-python library](https://pypi.org/project/opencv-python/), aka `cv2`, is the most widely used library for basic image processing in python. It's mostly a wrapper around the actual `opencv` library written in C++, which has existed in various forms since ~2000. Much of the documentation for `cv2`.
 
 A close second is [scikit-image](https://scikit-image.org/), aka `skimage`. This is a library written in python (with some Cython in the mix), so its modules and functions are organized around pythonic principles.
 
-If you're new to image analysis, these are also good reasons to learn `skimage` from the beginning. If you're used to using `cv2`, there are several reasons to consider picking up `skimage` as your default choice when starting a new imaging project.
+If you're new to image analysis, these are  good reasons to learn `skimage` from the beginning. If you're used to using `cv2`, there are several reasons to consider picking up `skimage` as your default choice when starting a new imaging project.
 
 I find `skimage` to be easier to learn, easier to use, and generally more powerful.
 
