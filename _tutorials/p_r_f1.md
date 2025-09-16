@@ -5,12 +5,15 @@ excerpt: "A short guide to the three most fundamental model metrics."
 
 Of all the metrics that are commonly used to describe an ML model's performance, the simplest ones are Precision (P), Recall (R), and F1. These three are the foundation for several more complex metrics.
 
-This is a short overview of these three metrics, including:
-* The formal mathemtical definitions
-* Why they are important
-* How the 
+All three metrics range from 0 to 1, with a higher score indicating a better model. You may also see them written as percentages, i.e. rescaled from 0 to 100.
 
-# Positive and Negative, True and False
+This is a short overview of P, R, and F1 that covers:
+* The formal mathematical definitions of each term
+* Why they are important
+* How adjusting the confidence threshold affects
+
+
+# Positive and Negative
 
 For the purpose of evaluating an ML model, the human annotations are the **ground truth** against which the model is compared. A model prediction is considered correct only when it matches the human annotation.
 
@@ -20,14 +23,14 @@ The way in which you decide whether a prediction matches a human annotation depe
 
 For classification models, both the input and output are binary variables. *Does the image contain a dog, or not? Does the image contain symptoms of X disease, or not?* For a given image, you simply compare the feature(s) that were marked as being present in the image by the model to those marked as present by humans.
 
-For detection models, the input and output are bounding boxes, each with a discrete size, shape, and position within the image. This makes it slightly more complicated to classify output as correct or incorrect, since two boxes drawn around the same feature will almost never overlap perfectly.
+For detection models, the input and output are bounding boxes, each with a discrete size, shape, and position within the image. This makes it slightly more complicated to classify each prediction as correct or incorrect, since two boxes drawn around the same target object will never overlap perfectly, regardless of who drew them.
 
-To solve this, we use 
+To account for this, we need a way to quantify the extent to which two boxes overlap. The simplest and most common way to do this is by calculating the intersection-over-union (IoU).
 
 For segmentation models, the input and output are polygons that delineate various target features in an object.
 
 
-
+## True and False
 
 There are two ways that a model's prediction can be incorrect: it can identify a target object where none exists, and it can fail to identify a target object that is truly there.
 
@@ -42,11 +45,7 @@ A True Negative is an instance where the model has missed
 
 For some tasks, the number of True Negatives may be impossible to calculate or simply not helpful. In a detection task, for example, 
 
-## Precision, Recall, and F1 scores
-
-Three metrics are commonly used to quantify performance of deep learning models for computer vision tasks: Precision (P), Recall (R), and F1.
-
-All three metrics range from 0 to 1, with a higher score indicating a better model. You may also see them written as percentages, i.e. rescaled from 0 to 100.
+## Precision and Recall
 
 **Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
 
@@ -71,20 +70,26 @@ For example, say that you have trained two models to detect aphids in an image. 
 Model A detects 5 aphids, all 5 of which were present in the ground truth. It has made no false positives, so its precision is perfect. It has missed the other 45 aphids, however, meaning it has many false negatives and thus a terrible recall:
 
 $$
-P_A = 5 / (5 + 0) = 1.0
-R_A = 5 / (5 + 45) = 0.05
+\begin{aligned}
+P_A &= 5 / (5 + 0) = 1.0
+R_A &= 5 / (5 + 45) = 0.05
+\end{aligned}
 $$
 
 Model B detects 500 aphids, including all 50 of the aphids that were noted in the ground truth. It has no false negatives (i.e. it has not missed anything) but a huge number of false positives. Thus the recall is perfect but the precision is terrible:
 
 $$
-P_B = 50 / (50 + 450) = 0.10
-R_B = 50 / (50 + 0) = 1.0
+\begin{aligned}
+P_B &= 50 / (50 + 450) = 0.10
+R_B &= 50 / (50 + 0) = 1.0
+\end{aligned}
 $$
 
 Each of these models would look good if you only looked at precision or recall, but when we look at both terms we can see that both models are performing poorly. A good model will have both high precision and high recall.
 
-How then can you account for both types of error? The **F1 score** is a measure that incorporates both the number of false positives and the number of false negatives:
+## F1
+
+Naturally, you might want to have a single term that summarizes . The **F1 score** is a measure that incorporates both the number of false positives and the number of false negatives:
 
 $$F1 = \frac{2 \cdot TP}{(2 \cdot TP + FP + FN)}$$
 
@@ -97,10 +102,12 @@ This is often used to find a meaningful "average" of fractions when the arithmet
 If you write out the harmonic mean of P and R and simplify the terms, you can see that it reduces to the equation for F1 given above:
 
 $$
-F1 = \left( \frac{P^{-1} + R^{-1}}{2} \right)^{-1}
-= \left( \frac{\frac{TP + FP}{TP} + \frac{TP + FN}{TP}}{2} \right)^{-1}
-= \left( \frac{2 \cdot TP + FP + FN}{2 \cdot TP} \right)^{-1}
-= \frac{2 \cdot TP}{2 \cdot TP + FP + FN}
+\begin{aligned}
+F1 &= \left( \frac{P^{-1} + R^{-1}}{2} \right)^{-1}
+&= \left( \frac{\frac{TP + FP}{TP} + \frac{TP + FN}{TP}}{2} \right)^{-1}
+&= \left( \frac{2 \cdot TP + FP + FN}{2 \cdot TP} \right)^{-1}
+&= \frac{2 \cdot TP}{2 \cdot TP + FP + FN}
+\end{aligned}
 $$
 
 This reduced form of the F1 equation ($2TP / (2TP + FP + FN)$) is the one you will see most often. The harmonic mean form is not as widely used.
