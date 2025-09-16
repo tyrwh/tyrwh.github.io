@@ -40,12 +40,12 @@ A False Positive is an instance where the model has detected something that was 
 
 A False Negative is an instance where the model has missed something that was present in the ground truth annotations.
 
-A True Negative is an instance where the model has missed 
+A True Negative is an instance where the model 
 
-
-For some tasks, the number of True Negatives may be impossible to calculate or simply not helpful. In a detection task, for example, 
 
 ## Precision and Recall
+
+The pure number of 
 
 **Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
 
@@ -71,8 +71,8 @@ Model A detects 5 aphids, all 5 of which were present in the ground truth. It ha
 
 $$
 \begin{aligned}
-P_A &= 5 / (5 + 0) = 1.0
-R_A &= 5 / (5 + 45) = 0.05
+P_A &= 5 / (5 + 0) = 1.0 \\
+R_A &= 5 / (5 + 45) = 0.05 \\
 \end{aligned}
 $$
 
@@ -80,8 +80,8 @@ Model B detects 500 aphids, including all 50 of the aphids that were noted in th
 
 $$
 \begin{aligned}
-P_B &= 50 / (50 + 450) = 0.10
-R_B &= 50 / (50 + 0) = 1.0
+P_B &= 50 / (50 + 450) = 0.10 \\
+R_B &= 50 / (50 + 0) = 1.0 \\
 \end{aligned}
 $$
 
@@ -89,7 +89,7 @@ Each of these models would look good if you only looked at precision or recall, 
 
 ## F1
 
-Naturally, you might want to have a single term that summarizes . The **F1 score** is a measure that incorporates both the number of false positives and the number of false negatives:
+Naturally, you might want to have a single term that accounts for both types of error. The **F1 score** is a metric that incorporates both the number of false positives and the number of false negatives:
 
 $$F1 = \frac{2 \cdot TP}{(2 \cdot TP + FP + FN)}$$
 
@@ -97,20 +97,22 @@ More precisely, the F1 is the *harmonic mean* of P and R. The harmonic mean of a
 
 $$HM = \left( \frac{a^{-1} + b^{-1} + c^{-1}}{3} \right) ^{-1}$$
 
-This is often used to find a meaningful "average" of fractions when the arithmetic mean would be misleading. For example, if you take a round trip of 40 miles each way (80 miles in total), going 20 mph one way and 40 mph on the way back, the trip will take 3 hours. This is equivalent to driving the full distance at an average speed of 26.6 mph, which the harmonic mean of 20 and 40 mph.
+This is often used to find a meaningful average of fractions when the arithmetic mean would be misleading. For example, say you take a round trip of 40 miles each way (80 miles in total), going 20 mph one way and 40 mph on the way back. The trip will take 3 hours: 2 hours there and 1 hour back. This is equivalent to driving the full distance at an average speed of 26.6 mph, which is the harmonic mean of 20 and 40 mph.
 
 If you write out the harmonic mean of P and R and simplify the terms, you can see that it reduces to the equation for F1 given above:
 
 $$
 \begin{aligned}
-F1 &= \left( \frac{P^{-1} + R^{-1}}{2} \right)^{-1}
-&= \left( \frac{\frac{TP + FP}{TP} + \frac{TP + FN}{TP}}{2} \right)^{-1}
-&= \left( \frac{2 \cdot TP + FP + FN}{2 \cdot TP} \right)^{-1}
-&= \frac{2 \cdot TP}{2 \cdot TP + FP + FN}
+F1 &= \left( \frac{P^{-1} + R^{-1}}{2} \right)^{-1} \\
+&= \left( \frac{\frac{TP + FP}{TP} + \frac{TP + FN}{TP}}{2} \right)^{-1} \\
+&= \left( \frac{2 \cdot TP + FP + FN}{2 \cdot TP} \right)^{-1} \\
+&= \frac{2 \cdot TP}{2 \cdot TP + FP + FN} \\
 \end{aligned}
 $$
 
 This reduced form of the F1 equation ($2TP / (2TP + FP + FN)$) is the one you will see most often. The harmonic mean form is not as widely used.
+
+### Why no 
 
 Notice that none of these equations include a term for the number of true negatives (TN). As mentioned in the section above, TN is often not very useful or informative.
 
