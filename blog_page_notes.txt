@@ -185,7 +185,6 @@ Many people want to know if their model is good or not. What is a good F1 score?
 
 Below is a set of quick ways
 
-
 Are you looking at test set performance?
 
 Does the F1-confidence curve look?
