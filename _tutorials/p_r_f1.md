@@ -3,17 +3,17 @@ title: "Precision, Recall, and F1"
 excerpt: "A short guide to the three most fundamental model metrics."
 ---
 
-Of all the metrics that are commonly used to describe an ML model's performance, the simplest ones are Precision (P), Recall (R), and F1. These three are the foundation for several more complex metrics.
+Of all the metrics that are commonly used to describe an ML model's performance, the simplest ones are Precision (P), Recall (R), and F1. They  are the foundation for several more complex metrics.
 
 All three metrics range from 0 to 1, with a higher score indicating a better model. You may also see them written as percentages, i.e. rescaled from 0 to 100.
 
 This is a short overview of P, R, and F1 that covers:
-* The formal mathematical definitions of each term
-* Why they are important
-* How adjusting the confidence threshold affects
+* The formal definition of each metric
+* A plain-language explanation of what they measure
+* Why these metrics are important
+* How adjusting the confidence threshold affects each one
 
-
-# Positive and Negative
+## Positive and Negative
 
 For the purpose of evaluating an ML model, the human annotations are the **ground truth** against which the model is compared. A model prediction is considered correct only when it matches the human annotation.
 
@@ -29,6 +29,7 @@ To account for this, we need a way to quantify the extent to which two boxes ove
 
 For segmentation models, the input and output are polygons that delineate various target features in an object.
 
+A model may have many different **classes** of target object that is seeking. 
 
 ## True and False
 
@@ -40,58 +41,59 @@ A False Positive is an instance where the model has detected something that was 
 
 A False Negative is an instance where the model has missed something that was present in the ground truth annotations.
 
-A True Negative is an instance where the model 
+A True Negative is an instance where the model .
 
+The total number of target objects detected by the model is equal to $\mathrm{TP+FP}$, while the total number of target objects detected in the ground truth is equal to $\mathrm{TP+FN}$.
 
 ## Precision and Recall
 
-The pure number of 
+It is not very useful to know the number of false positives or true negatives in isolation, since it obviously depends on the number of images, the frequency of the target object, random sampling, *etc*. We need metrics that are properly scaled in order to get a good sense of model performance.
 
-**Precision** is a measure of the prevalence of false positives (FP). It is the proportion of the objects detected by the model that are present in the ground truth data.
-
-$$
-P = \frac{TP}{TP + FP}
-$$
-
-A model with a high P value produces a low number of false positives, while a model with low P has a high number of false positives. That is, it detecting many things that aren't really there.
-
-**Recall** is a measure of the prevalence of false posinegativestives (FN). It is the proportion of the objects identified in the ground truth data that were successfully detected by the model.
+**Precision** (P) is a metric that describes the prevalence of false positives. It is equal to the number of correct detections ($\mathrm{TP}$) divided by the total number of detections ($\mathrm{TP+FP}$):
 
 $$
-R = \frac{TP}{TP + FN}
+P = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}}
 $$
 
-In other words, recall is the proportion of the target objects that are detected by the model. A model with low R is missing many target objects. A model with P = 1 has zero false negatives (FN).
+If a model has high P, any objects that are detected by the model are very likely to be correct detections. If it has low P, then the majority of its detections are liable to be incorrect, *i.e.* it is often seeing things that aren't there.
 
-It is important to report both P and R, because there is often a tradeoff between the two, and a model that excels in one metric may be terrible in the other.
-
-For example, say that you have trained two models to detect aphids in an image. You apply them to an image in which 50 aphids were found and annotated in the ground truth data.
-
-Model A detects 5 aphids, all 5 of which were present in the ground truth. It has made no false positives, so its precision is perfect. It has missed the other 45 aphids, however, meaning it has many false negatives and thus a terrible recall:
+**Recall** (R) is is a metric that describes the prevalence of false positives. It is equal to the number of correct detections (`TP`) divided by the total number of objects that were present in the ground truth (`TP+FN`):
 
 $$
-\begin{aligned}
-P_A &= 5 / (5 + 0) = 1.0 \\
-R_A &= 5 / (5 + 45) = 0.05 \\
-\end{aligned}
+R = \frac{\mathrm{TP}}{\mathrm{TP} + FN}
 $$
 
-Model B detects 500 aphids, including all 50 of the aphids that were noted in the ground truth. It has no false negatives (i.e. it has not missed anything) but a huge number of false positives. Thus the recall is perfect but the precision is terrible:
+If a model has high R, it has correctly detected most of the target objects that were noted in the ground truth. If it has low R, then it failed to detect many of these targets.
+
+**It is important to look at both both P and R**, because there is often a tradeoff between the two and a model that excels in one metric may be terrible in the other.
+
+For example, say that you have trained two models to detect aphids in an image. You apply them to an image in which 50 aphids were identified and annotated in the ground truth data.
+
+Model A detects 5 aphids, all 5 of which were present in the ground truth. There are no false positives, so its precision is perfect. It has missed the other 45 aphids, however, meaning it has many false negatives and thus a terrible recall:
 
 $$
 \begin{aligned}
-P_B &= 50 / (50 + 450) = 0.10 \\
-R_B &= 50 / (50 + 0) = 1.0 \\
+P_A &= \frac{5}{(5 + 0)} = 1.0 \\
+R_A &= \frac{5}{(5 + 45)} = 0.05 \\
 \end{aligned}
 $$
 
-Each of these models would look good if you only looked at precision or recall, but when we look at both terms we can see that both models are performing poorly. A good model will have both high precision and high recall.
+Model B has the opposite problem. It detects 500 aphids, including all 50 that were noted in the ground truth, meaning that there are no false negatives and its recall is perfect. There is a huge number of false positives, however, so its precision is terrible:
 
-## F1
+$$
+\begin{aligned}
+P_B &= \frac{50}{(50 + 450)} = 0.10 \\
+R_B &= \frac{50}{(50 + 0)} = 1.0 \\
+\end{aligned}
+$$
 
-Naturally, you might want to have a single term that accounts for both types of error. The **F1 score** is a metric that incorporates both the number of false positives and the number of false negatives:
+Each of these models might look good if you only looked at P or R, but when we look at both terms we can see that both models are not very useful. A good model will have both high precision and high recall.
 
-$$F1 = \frac{2 \cdot TP}{(2 \cdot TP + FP + FN)}$$
+## F1 score
+
+Naturally, you might want to have a single term that accounts for both types of error. The **F1 score** is a metric incorporating both the number of false positives (FP) and the number of false negatives (FN) relative to the number of true positives (TP):
+
+$$\mathrm{F1} = \frac{2 \cdot \mathrm{TP}}{(2 \cdot \mathrm{TP + FP + FN})}$$
 
 More precisely, the F1 is the *harmonic mean* of P and R. The harmonic mean of a set of numbers is the reciprocal of the mean of the reciprocals of that set. That is, for numbers *a*, *b*, and *c*, the harmonic mean is calculated like so:
 
@@ -103,37 +105,54 @@ If you write out the harmonic mean of P and R and simplify the terms, you can se
 
 $$
 \begin{aligned}
-F1 &= \left( \frac{P^{-1} + R^{-1}}{2} \right)^{-1} \\
-&= \left( \frac{\frac{TP + FP}{TP} + \frac{TP + FN}{TP}}{2} \right)^{-1} \\
-&= \left( \frac{2 \cdot TP + FP + FN}{2 \cdot TP} \right)^{-1} \\
-&= \frac{2 \cdot TP}{2 \cdot TP + FP + FN} \\
+\mathrm{F1} &= \left( \frac{P^{-1} + R^{-1}}{2} \right)^{-1} \\
+&= \left( \frac{\frac{\mathrm{TP + FP}}{\mathrm{TP}} + \frac{\mathrm{TP + FN}}{\mathrm{TP}}}{2} \right)^{-1} \\
+&= \left( \frac{2 \cdot \mathrm{TP + FP + FN}}{2 \cdot \mathrm{TP}} \right)^{-1} \\
+&= \frac{2 \cdot \mathrm{TP}}{2 \cdot \mathrm{TP + FP + FN}} \\
 \end{aligned}
 $$
 
-This reduced form of the F1 equation ($2TP / (2TP + FP + FN)$) is the one you will see most often. The harmonic mean form is not as widely used.
+This reduced form of the F1 equation ($2TP / (\mathrm{2TP + FP + FN})$) is the one you will see most often. The harmonic mean form is not as widely used.
 
-### Why no 
+### Why no True Negatives?
 
-Notice that none of these equations include a term for the number of true negatives (TN). As mentioned in the section above, TN is often not very useful or informative.
+Notice that none of these equations include a term for the number of true negatives (TN). There are two reasons for this.
 
-## Confidence thresholds
+First, when a given class of target object is rare, then the number of TNs will be exceedingly large compared to the number of TP/FP/FNs. 
 
-When a deep learning model is applied to an image, it makes a set of predictions: . Typically, each of these predictions has its own associated **confidence score**. This score ranges from 0 to 1, with a higher value indicating that the model is more confident that the prediction in question is correct.
+For example, say that you . 
 
-In a well-trained model, this confidence score is closely tied to a : predictions with `confidence = 0.05` are almost exclusively false positives, while predictions with `confidence = 0.95` are almost exclusively true positives. In a poorly performing model, the confidence score will be less accurate.
+A model that simply returns `False` no matter what the image 
 
-When you apply a model to new data, you will often set a *confidence threshold* for reporting. Only those predictions with a confidence score equal to or greater than this threshold value will be included in the results.
+For example, 
+
+Second, the number of true negatives may be hard to define in any meaningful way in the first place. In an object detection task, both the ground truth and predictions take the form of boxes with a discrete shape, size, and position. The 
+
+
+
+### F beta
+
+As a metric, F1 gives equal weight to a false positive and a false negative. What if one type of error is worse than the other? Can you use a different metric to push the model into being more or less cautious in its predictions?
+
+It is easy to envision a scenario where this is the case. If your model is trained to detect symptoms of a rare and dangerous disease, then a false negative may be fatal, while a false positive merely f.
+
+This can be done using the $F_{\beta}$ metric. 
+
+# Confidence thresholds
+
+When a model is applied to an image, it makes a set of predictions. Typically, each of these predictions has its own associated **confidence score**. This score ranges from 0 to 1, with a higher value indicating that the model is more confident that the prediction in question is correct.
+
+In an ideal model, this confidence score is a good reflection of the true state of things: predictions with `confidence = 0.05` are almost exclusively false positives, while predictions with `confidence = 0.95` are almost exclusively true positives. In a poorly performing model, the confidence score will be less accurate.
+
+When you apply a model to new data, you will often set a **confidence threshold** for reporting. Only those predictions with a confidence score equal to or greater than this threshold value will be included in the results.
 
 This filtering can also be done retroactively. If you want to examine the effect of different confidence , you can included in the initial model output and filtered out later on in your workflow.
 
 **P, R, and F1 scores for a model are 100% contingent on the confidence threshold used to filter predictions.** 
 
-A deep learning model which produces confidence values *does not have* a generic or universal value of precision, recall, or F1. It only has values of P/R/F1 at a specific confidence threshold. 
+A deep learning model which produces confidence values *does not have* a generic, universal value of precision, recall, or F1. It only has a P/R/F1 at a given confidence threshold.
 
-Whenever you report a model's P, R, or F1, you should include the confidence threshold used.
-
-It is very important to check the documentation for whatever tools you are using to see what the confidence threshold. 
-
+It is important, therefore, to know what confidence interval was used to produce P/R/F1 when evaluating another model, and to include the confidence threshold used when reporting your own model's performance. Check the documentation for whatever tool you're using to .
 
 ## How does the confidence threshold affect P and R?
 
