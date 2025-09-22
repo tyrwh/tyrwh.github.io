@@ -5,7 +5,9 @@ excerpt: "Foobar snarble"
 
 I can maybe just copy-paste the stuff here from that one email rant I sent out.
 
-*Pearson's correlation coefficient* ($r$) is a very common metric to describe the relationship between two variables, as is the *coefficient of determination* ($R^2$). 
+*Pearson's correlation coefficient* ($r$) and the related *coefficient of determination* ($R^2$) are very common metrics used to describe the relationship between two variables. 
 
-There are very good reasons not to use either of these in evaluating an ML model, however. 
+There are good reasons why these are not commonly used in evaluating an ML model, however.
+
+One pitfall 
 

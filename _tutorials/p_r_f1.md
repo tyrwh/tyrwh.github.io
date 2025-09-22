@@ -5,13 +5,13 @@ excerpt: "A short guide to the three most fundamental model metrics."
 
 Of all the metrics that are commonly used to describe an ML model's performance, the simplest ones are Precision (P), Recall (R), and F1. They  are the foundation for several more complex metrics.
 
-All three metrics range from 0 to 1, with a higher score indicating a better model. You may also see them written as percentages, i.e. rescaled from 0 to 100.
-
 This is a short overview of P, R, and F1 that covers:
 * The formal definition of each metric
 * A plain-language explanation of what they measure
 * Why these metrics are important
 * How adjusting the confidence threshold affects each one
+
+All three metrics range from 0 to 1, with a higher score indicating a better model. You may also see them written as percentages, i.e. rescaled from 0 to 100.
 
 ## Positive and Negative
 
@@ -93,15 +93,19 @@ Each of these models might look good if you only looked at P or R, but when we l
 
 Naturally, you might want to have a single term that accounts for both types of error. The **F1 score** is a metric incorporating both the number of false positives (FP) and the number of false negatives (FN) relative to the number of true positives (TP):
 
-$$\mathrm{F1} = \frac{2 \cdot \mathrm{TP}}{(2 \cdot \mathrm{TP + FP + FN})}$$
+$$\mathrm{F1} = \frac{2 \mathrm{TP}}{(2 \mathrm{TP + FP + FN})}$$
 
 More precisely, the F1 is the *harmonic mean* of P and R. The harmonic mean of a set of numbers is the reciprocal of the mean of the reciprocals of that set. That is, for numbers *a*, *b*, and *c*, the harmonic mean is calculated like so:
 
-$$HM = \left( \frac{a^{-1} + b^{-1} + c^{-1}}{3} \right) ^{-1}$$
+$$HM(a,b,c) = \left( \frac{a^{-1} + b^{-1} + c^{-1}}{3} \right) ^{-1}$$
 
-This is often used to find a meaningful average of fractions when the arithmetic mean would be misleading. For example, say you take a round trip of 40 miles each way (80 miles in total), going 20 mph one way and 40 mph on the way back. The trip will take 3 hours: 2 hours there and 1 hour back. This is equivalent to driving the full distance at an average speed of 26.6 mph, which is the harmonic mean of 20 and 40 mph.
+This is often used to find a meaningful "average" of fractions when the arithmetic mean would be misleading or not useful.
 
-If you write out the harmonic mean of P and R and simplify the terms, you can see that it reduces to the equation for F1 given above:
+For example, say you take a round trip of 40 miles each way, traveling 20 MPH one way and 40 MPH on the way back. The trip will take 3 hours: 2 hours there and 1 hour back. 
+
+You can calculate the trip time by dividing the total distance traveled (80 miles) by the "average" speed traveled, but this only works if you use the *harmonic* mean of the two speeds (26.6 MPH), not the arithmetic mean (30 MPH).
+
+If you write out the harmonic mean of $\mathrm{P}$ and $\mathrm{R}$ and simplify the terms, you can see that it reduces to the equation for F1 given above:
 
 $$
 \begin{aligned}
@@ -116,17 +120,15 @@ This reduced form of the F1 equation ($2TP / (\mathrm{2TP + FP + FN})$) is the o
 
 ### Why no True Negatives?
 
-Notice that none of these equations include a term for the number of true negatives (TN). There are two reasons for this.
+You may have noticed that none of these metrics include a term for the number of true negatives (TNs). Such metrics do exist (*specificity*, for example), but you will not see them used very often in image analysis tasks. There are at least two reasons for this.
 
 First, when a given class of target object is rare, then the number of TNs will be exceedingly large compared to the number of TP/FP/FNs. 
 
-For example, say that you . 
+Say you want to train a classification model to recognize a disease symptom that only occurs in 1 out of 100 images. A "model" that simply returns `False` no matter what the image looks like will still be correct in 99% of cases.
 
-A model that simply returns `False` no matter what the image 
+Second, the number of true negatives may be hard to define in any meaningful way in the first place.
 
-For example, 
-
-Second, the number of true negatives may be hard to define in any meaningful way in the first place. In an object detection task, both the ground truth and predictions take the form of boxes with a discrete shape, size, and position. The 
+In an object detection task, both the ground truth and predictions take the form of boxes with a discrete shape, size, and position. 
 
 
 

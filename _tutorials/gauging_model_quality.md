@@ -3,30 +3,36 @@ title: "Gauging model quality"
 excerpt: "How do you decide if a model is performing well or not?"
 ---
 
-One thing many people often want to know whether a model is performing well or not. Is $F1=0.93$ good? Is $mAP_{50-95}=0.78$ bad? 
+One thing many people often want to know whether a model is performing well or not. Is $F1=0.93$ good? Is $mAP_{50-95}=0.78$ bad? Is it worth your time to gauge thow 
 
-There is no clear-cut answer, but you can.
+There is no clear-cut answer, but below are some steps that you can use to gauge the performance of your model.
 
 # Questions to ask before you look at the metrics
 
-Everyone 
+### How difficult is the task in question?
 
-### How hard is the task in question?
+Some computer vision tasks are profoundly simple, such as the widely-used Microsoft *Common Objects in Context* (COCO) dataset that was structured around objects that are "easily recognizable by a 4 year old" (CITE). Others may require a qualified expert with years of experience to accurately annotate.
 
-ML models are used for a staggering array of image analysis tasks. The task in question can range from the trivially easy to one that only highly experienced experts are qualified to perform. The widely-used Microsoft *Common Objects in Context* (COCO) dataset was explicitly created around "91 objects \[*sic*\] types that would be easily recognizable by a 4 year old" (CITE).
+Is the 
 
 Asking this question may also draw attention to a task that is poorly defined. Say you have a dataset which consists of pictures of apples harvested at different points.
 
 ### How good is the image quality?
 
-Even if the task is straightforward in theory, the quality of the images plays a large part in how well the model can perform.
+Even if the task is straightforward in theory, the quality of the images plays an enormous role in how well the model can ultimately perform.
 
 Are target objects often obscured by one another or by non-target objects? Is everything in focus, so that it is very easy to draw a line around each target object, or are the edges blurry and hard to define?
 
-### How good is the human annotation data?
-This overlaps somewhat with the previous question.
+If two humans can look at an image and .
 
-Have you done any comparisons to gauge how consistent one human is against another?
+### Have you measured the rate of agreement between humans?
+
+If you have 
+
+Have you done any comparisons to gauge how consistent one human is against another? If not, is this feasible to do?
+
+It is difficult for your model to surpass the level of human-human agreement, 
+
 
 # Know what dataset you are looking at
 
