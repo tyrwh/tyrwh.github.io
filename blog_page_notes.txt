@@ -1,9 +1,8 @@
 ### Notes for personal blog
 
+Made this with the minimal-mistakes theme for jekyll. This seems to be one of the most popular themes for jekyll out there.
 
-Page ideas --
-- Intro to computer vision
-- Intro to machine learning
+For a BI page, you could 
 
 
 

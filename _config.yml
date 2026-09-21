@@ -120,7 +120,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:tw372@cornell.edu"
+      url: "mailto:tyr.wiesnerhanks@ufl.edu"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -254,8 +254,13 @@ pagination:
     before: 2
     after: 2
 
+# check jekyll docs for difference between /:path/ and /:name/
+# using path, in case we want subdirs in a collections dir to be reflected as URL components
 collections:
   tutorials:
+    output: true
+    permalink: :collection/:path/
+  apps:
     output: true
     permalink: :collection/:path/
 
