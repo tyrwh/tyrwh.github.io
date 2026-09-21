@@ -2,7 +2,7 @@
 
 Made this with the minimal-mistakes theme for jekyll. This seems to be one of the most popular themes for jekyll out there.
 
-For a BI page, you could 
+For a BI page, you could probably use chirpy instead? Not sure what makes the most sense for a base.
 
 
 

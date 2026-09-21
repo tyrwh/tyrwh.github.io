@@ -1,6 +1,6 @@
 ---
-title: "Launch the minimal Gradio app"
-excerpt: "A demo page to launch a service on Google Cloud Run."
+title: "Gradio demo app"
+excerpt: "A simple demo Gradio app to demonstrate Cloud Run hosting."
 ---
 
 Somewhere in this page, there should be something that is launching a Google Cloud Run app. Trying it out now with an event listener.

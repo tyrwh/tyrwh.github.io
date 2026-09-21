@@ -1,11 +1,11 @@
 ---
 title: "BIGapp Rshiny platform"
-excerpt: "A demo page to launch a service on Google Cloud Run."
+excerpt: "Analyze genomic data across different species ploidy without needing to use command-line tools."
 ---
 
-This is a page to launch Breeding Insight's BIGapp (BI Genomics app), an RShiny-based platform to etc etc
+This is a page to launch Breeding Insight's BIGapp (BI Genomics app), an RShiny-based platform to do genomics and such.
 
-For more information about BIGapp, visit its Github [here](https://github.com/Breeding-Insight/BIGapp)
+For more information about BIGapp, visit its Github [here](https://github.com/Breeding-Insight/BIGapp).
 
 <script>
 window.addEventListener('load', () => {

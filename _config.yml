@@ -317,6 +317,8 @@ compress_html:
   ignore:
     envs: development
 
+#####
+# You need to define the defaults here in order for new collection types to inherit styles/layouts
 
 # Defaults
 defaults:
@@ -336,6 +338,18 @@ defaults:
   - scope:
       path: ""
       type: tutorials
+    values:
+      layout: single
+      author_profile: true
+      read_time: # true
+      comments: # true
+      share: true
+      related: true
+      mathjax: true
+  # _apps
+  - scope:
+      path: ""
+      type: apps
     values:
       layout: single
       author_profile: true

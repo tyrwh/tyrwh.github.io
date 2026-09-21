@@ -1,9 +1,9 @@
 ---
-title: "Launch the minimal Gradio app"
-excerpt: "A demo page to launch a service on Google Cloud Run."
+title: "QR Image Renamer"
+excerpt: "Rename images in bulk using text scraped from QR codes found in each image."
 ---
 
-Somewhere in this page, there should be something that is launching a Google Cloud Run app. Trying it out now with an event listener.
+Rename images in bulk using text scraped from QR codes found in each image.
 
 <script>
 window.addEventListener('load', () => {
